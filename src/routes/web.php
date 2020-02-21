@@ -55,5 +55,16 @@ Route::post('/edit/{id}' , function($id){
 
     $name = $task->name ;
 
-    return view('/edits', compact('name'));
+    return view('/edits', compact('task'));
+});
+
+
+Route::post('/edit/{id}/execute',function($id ,Request $request){
+    $task = Task::find($id);
+
+    $task->name = $request->name;
+    $task->save();
+
+    return redirect('/');
+
 });
