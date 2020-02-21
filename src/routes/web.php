@@ -11,60 +11,14 @@
 |
 */
 
-use App\Task;
-use Illuminate\Http\Request;
+use App\Http\Controllers\TaskController;
 
+Route::get('/', 'TaskController@index');
 
-Route::get('/', function () {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
+Route::post('/task', 'TaskController@add');
 
-    return view('tasks', [
-        'tasks' => $tasks
-    ]);
-});
+Route::delete('/task/{id}', 'TaskController@delete');
 
+Route::post('/edit/{id}' ,'TaskController@edit_open' );
 
-Route::post('/task', function (Request $request) {
-
-        $validator = Validator::make($request->all(), [
-        'name' => 'required|max:255',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect('/')
-            ->withInput()
-            ->withErrors($validator);
-    }
-
-    $task = new Task();
-    $task->name = $request->name;
-    $task->save();
-
-    return redirect('/');
-});
-
-Route::delete('/task/{task}', function (Task $task) {
-    $task->delete();
-
-    return redirect('/');
-});
-
-
-Route::post('/edit/{id}' , function($id){
-    $task = Task::find($id);
-
-    $name = $task->name ;
-
-    return view('/edits', compact('task'));
-});
-
-
-Route::post('/edit/{id}/execute',function($id ,Request $request){
-    $task = Task::find($id);
-
-    $task->name = $request->name;
-    $task->save();
-
-    return redirect('/');
-
-});
+Route::post('/edit/{id}/execute','TaskController@edit_execute');
