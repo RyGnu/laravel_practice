@@ -2,17 +2,17 @@
 @switch($key)
 @case('tasks_pri1')
     <tr>
-        <td>優先度:高</td>
+        <td class="bg-danger text-white">優先度:高</td>
     </tr>
     @break
 @case('tasks_pri2')
     <tr>
-        <td>優先度:中</td>
+        <td class="bg-primary text-white">優先度:中</td>
     </tr>
     @break
 @case('tasks_pri3')
     <tr>
-        <td>優先度:低</td>
+        <td class="bg-success text-white">優先度:低</td>
     </tr>
     @break
 @endswitch

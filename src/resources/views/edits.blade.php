@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('content')
 
-
-
 <div class="container">
     <h1 class="text-center">編集ページだよ</h1>
 
@@ -12,7 +10,7 @@
         class="form-horizontal">
          @csrf
          @method('PUT')
-        <!-- 元のタスク名 -->
+            <!-- 元のタスク名 -->
             <div class="form-group">
                 <label for="task-name" class="col-sm-3 control-label">タスク</label>
                 <div class="col-sm-6">
@@ -20,33 +18,23 @@
                 </div>
             </div>
 
-
-            @if($tasks->priority === 'HI')
-                <p>現在の優先度:高</p>
-                <div class="form-group col-sm-4">
-                        <input type="radio" name="priority" id="pri1" value="HI" checked>
-                        <label for="pri1">高</label>
-
-                        <input type="radio" name="priority" id="pri2" value="MID" >
-                        <label for="pri2">中</label>
-
-                        <input type="radio" name="priority" id="pri3" value="LOW">
-                        <label for="pri3">低</label>
-                    </div>
-
-            @endif
-
-
             <!--優先順位ボタン-->
-            <div class="form-group col-sm-4">
-                <input type="radio" name="priority" id="pri1" value="HI">
-                <label for="pri1">高</label>
+            <div class="form-group col-sm-4　text-center">
+                <div class="text-center">
+                    現在の優先度：@if($tasks->priority == "HI")高
+                                @elseif($tasks->priority == "MID")中
+                                @elseif($tasks->priority == "LOW")低
+                                @endif
 
-                <input type="radio" name="priority" id="pri2" value="MID" >
-                <label for="pri2">中</label>
+    　               更新後：<input type="radio" name="priority" id="pri1" value="HI" @if($tasks->priority == "HI") checked @endif>
+                            <label for="pri1">高</label>
 
-                <input type="radio" name="priority" id="pri3" value="LOW">
-                <label for="pri3">低</label>
+                            <input type="radio" name="priority" id="pri2" value="MID" @if($tasks->priority == "MID") checked @endif>
+                            <label for="pri2">中</label>
+
+                            <input type="radio" name="priority" id="pri3" value="LOW"@if($tasks->priority == "LOW") checked @endif>
+                            <label for="pri3">低</label>
+                </div>
             </div>
 
             <!-- タスク変更ボタン -->

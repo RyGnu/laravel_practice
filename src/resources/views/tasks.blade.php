@@ -3,7 +3,7 @@
 
     <div class="container">
 
-        <div class="col-sm -offset-2 col-sm-8">
+        <div class="col-sm -offset-3 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     新しいタスク
@@ -12,10 +12,6 @@
 
                      <!-- バリデーションエラーの表示 -->
                      @include('common.errors')
-
-
-
-                     <div></div>
 
                     <!-- 新タスクフォーム -->
                     <form action="{{ url('tasks')}}" method="POST" class="form-horizontal">
@@ -32,6 +28,7 @@
 
                             <!--優先順位ボタン-->
                             <div class="form-group col-sm-4">
+                                優先度
                                 <input type="radio" name="priority" id="pri1" value="HI">
                                 <label for="pri1">高</label>
 
@@ -43,6 +40,11 @@
                             </div>
                         </div>
 
+                            <!-- 期限日入力 -->
+                            <label for="limit">期日</label>
+                            <input type="date" name="limit" id="limit" value="2020-02-01" required>
+
+
                         <!-- タスク追加ボタン -->
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
@@ -51,10 +53,11 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                     </form>
+
                 </div>
             </div>
-            <!-- TODO: 現在のタスク -->
+            <!--現在のタスク -->
             @if ($task_exit)
 
                 <div class="panel panel-default">
@@ -66,6 +69,7 @@
                       <!-- テーブルヘッダ -->
                     <thead>
                         <tr>
+                           <th>期日</th>
                            <th>タスク</th>
                            <th>&nbsp;</th>
                          </tr>
@@ -78,13 +82,21 @@
                         @foreach ($value as $task)
 
                         <tr>
+                            <!--期日表示-->
+                            <td>
+                                <div>{{ $task->limit }}
+
+                              @if($task->over_limit)<span style="color:red">Too Later!</span>@endif
+
+                                </div>
+                            </td>
+
+                            <!--タスクの表示-->
                             <td class="table-text">
                                 <div>{{ $task->name }}</div>
                             </td>
 
-
-                            <!-- TODO: 編集ボタン -->
-
+                            <!-- 編集ボタン -->
                             <td>
                                 <form action="{{ url('/tasks'.'/'.$task->id.'/edit')}}" method="get">
                                     @csrf
@@ -94,14 +106,14 @@
                                 </form>
                             </td>
 
-                            <!-- TODO: 削除ボタン -->
+                            <!-- 削除ボタン -->
                             <td>
                                 <form action="{{ url('tasks/'.$task->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger">
         　                              <i class="fa fa-btn fa-trash"></i>　削除
-                                  </button>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

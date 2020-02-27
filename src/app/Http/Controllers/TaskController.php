@@ -6,50 +6,24 @@ use App\Task;
 // use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\TextInput;
+use Datetime;
 
 class TaskController extends Controller
 {
-    //
-
-    // public function  index(){
-    //     $tasks = Task::orderBy('created_at', 'asc')->get();
-
-    //      return view('tasks', ['tasks' => $tasks]);
-
-    // }
-
-    // return view('tasks', ['tasks' => $tasks]);
-
-
-
-    // public function index (){
-
-    //     // sort('HI')
-    //     $tasks1 = Task::where('priority','HI')
-    //             ->orderBy('created_at', 'asc')->get();
-
-    //     // sort('MID')
-    //     $tasks2 = Task::where('priority','MID')
-    //             ->orderBy('created_at', 'asc')->get();
-    //     // sort('LOW')
-    //     $tasks3= Task::where('priority','LOW')
-    //             ->orderBy('created_at', 'asc')->get();
-
-    //     $exit = false;
-
-    //     if (count($tasks1)>0 || count($tasks2) > 0 || count($tasks3) > 0){
-    //         $exit = true;
-    //     }
-
-    //     return view('tasks', [
-    //         'task_exit' => $exit,
-    //         'tasks_pri1' => $tasks1,
-    //         'tasks_pri2' => $tasks2,
-    //         'tasks_pri3' => $tasks3]);
-
-    // }
-
     public function index (){
+
+        $tasks_checklimit = Task::all();
+
+        $today = new DateTime();
+
+        foreach($tasks_checklimit as $task){
+            $limit_day = new DateTime($task->limit);
+            if($limit_day < $today){
+                $task->over_limit = true;
+                $task->save();
+            }
+        }
+
 
         // sort('HI')
         $tasks_pri1 = Task::where('priority','HI')
@@ -77,11 +51,14 @@ class TaskController extends Controller
     public function add(TextInput $request) {
 
 
+
         $task = new Task();
         $task->name = $request->name;
         $task->priority = $request->priority;
+        $task->limit = $request->limit;
 
         $task->save();
+
 
         return redirect('/tasks');
     }
@@ -104,6 +81,7 @@ class TaskController extends Controller
 
         $tasks->name = $request->name;
         $tasks->priority = $request->priority;
+        $tasks->limit = $request->limit;
         $tasks->save();
 
         return redirect('/tasks');
