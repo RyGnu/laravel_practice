@@ -1,0 +1,19 @@
+@if(count($tasks[$key])>0)
+@switch($key)
+@case('tasks_pri1')
+    <tr>
+        <td>優先度:高</td>
+    </tr>
+    @break
+@case('tasks_pri2')
+    <tr>
+        <td>優先度:中</td>
+    </tr>
+    @break
+@case('tasks_pri3')
+    <tr>
+        <td>優先度:低</td>
+    </tr>
+    @break
+@endswitch
+@endif
