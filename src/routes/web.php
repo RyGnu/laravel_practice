@@ -13,7 +13,7 @@
 
 use App\Http\Controllers\TaskController;
 
-Route::get('/tasks', 'TaskController@index')->name('tasks.index');
+Route::get('/tasks', 'TaskController@index2')->name('tasks.index');
 
 Route::post('/tasks', 'TaskController@add');
 

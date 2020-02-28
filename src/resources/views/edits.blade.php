@@ -35,6 +35,13 @@
                             <input type="radio" name="priority" id="pri3" value="LOW"@if($tasks->priority == "LOW") checked @endif>
                             <label for="pri3">低</label>
                 </div>
+
+                <div class="text-center">
+                    <!-- 期限日入力 -->
+                    <label for="limit">期日</label>
+                    <input type="date" name="limit" id="limit" value="{{$tasks->limit}}" required>
+                </div>
+
             </div>
 
             <!-- タスク変更ボタン -->

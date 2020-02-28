@@ -41,8 +41,10 @@
                         </div>
 
                             <!-- 期限日入力 -->
+
                             <label for="limit">期日</label>
-                            <input type="date" name="limit" id="limit" value="2020-02-01" required>
+                            <input type="date" name="limit" id="limit"
+                             value="@php echo date("Y-m-d")@endphp" required>
 
 
                         <!-- タスク追加ボタン -->
@@ -93,7 +95,7 @@
 
                             <!--タスクの表示-->
                             <td class="table-text">
-                                <div>{{ $task->name }}</div>
+                                <div id = "change_color">{{ $task->name }}</div>
                             </td>
 
                             <!-- 編集ボタン -->
@@ -127,5 +129,38 @@
             @endif
         </div>
     </div>
+
+<style>
+    .colorborder{
+        border-left: 10px;
+        border-color: red;
+
+    }
+
+ </style>
+
+<script>
+    $(function()){
+
+
+        if($tasks->priority == "HI") {
+            $(”#change_color”).addClass(”colorborder”);
+
+
+        }
+        elseif($tasks->priority == "MID") {
+            $(”#change_color”);
+
+        }elsef($tasks->priority == "LOW") {
+            $(”#change_color”);
+
+        }
+
+
+
+    });
+
+</script>
+
 
 @endsection
