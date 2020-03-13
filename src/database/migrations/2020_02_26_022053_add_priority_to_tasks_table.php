@@ -14,7 +14,7 @@ class AddPriorityToTasksTable extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->string('priority',4)->after('name');
+        
         });
     }
 
@@ -26,7 +26,7 @@ class AddPriorityToTasksTable extends Migration
     public function down()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->dropColumn('priority');
+        
         });
     }
 }

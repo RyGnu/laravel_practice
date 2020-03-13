@@ -21,18 +21,18 @@
             <!--優先順位ボタン-->
             <div class="form-group col-sm-4　text-center">
                 <div class="text-center">
-                    現在の優先度：@if($tasks->priority == "HI")高
-                                @elseif($tasks->priority == "MID")中
-                                @elseif($tasks->priority == "LOW")低
-                                @endif
+                    現在の優先度：@if($tasks->priority == "1")高
+                                  @elseif($tasks->priority == "2")中
+                                  @elseif($tasks->priority == "3")低
+                                  @endif
 
-    　               更新後：<input type="radio" name="priority" id="pri1" value="HI" @if($tasks->priority == "HI") checked @endif>
+                    更新後：<input type="radio" name="priority" id="pri1" value="1" @if($tasks->priority == "1") checked @endif>
                             <label for="pri1">高</label>
 
-                            <input type="radio" name="priority" id="pri2" value="MID" @if($tasks->priority == "MID") checked @endif>
+                            <input type="radio" name="priority" id="pri2" value="2" @if($tasks->priority == "2") checked @endif>
                             <label for="pri2">中</label>
 
-                            <input type="radio" name="priority" id="pri3" value="LOW"@if($tasks->priority == "LOW") checked @endif>
+                            <input type="radio" name="priority" id="pri3" value="3" @if($tasks->priority == "3") checked @endif>
                             <label for="pri3">低</label>
                 </div>
 

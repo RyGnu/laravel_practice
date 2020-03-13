@@ -13,12 +13,14 @@
 
 use App\Http\Controllers\TaskController;
 
-Route::get('/tasks', 'TaskController@index2')->name('tasks.index');
+Route::get('/tasks', 'TaskController@index')->name('tasks.index');
 
 Route::post('/tasks', 'TaskController@add');
-
-Route::delete('/tasks/{tasks}', 'TaskController@delete');
 
 Route::get('/tasks/{tasks}/edit' ,'TaskController@edit_open' );
 
 Route::put('/tasks/{tasks}','TaskController@edit_execute');
+
+Route::delete('/tasks/{tasks}', 'TaskController@delete');
+
+

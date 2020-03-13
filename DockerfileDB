@@ -1,0 +1,6 @@
+FROM mysql:8.0
+RUN cd root
+RUN cd var
+RUN ls -l -a
+
+

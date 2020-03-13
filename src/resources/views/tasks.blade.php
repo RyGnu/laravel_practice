@@ -3,7 +3,7 @@
 
     <div class="container">
 
-        <div class="col-sm -offset-3 col-sm-8">
+        <div class="col-sm-offset-2 col-sm-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     新しいタスク
@@ -29,13 +29,13 @@
                             <!--優先順位ボタン-->
                             <div class="form-group col-sm-4">
                                 優先度
-                                <input type="radio" name="priority" id="pri1" value="HI">
+                                <input type="radio" name="priority" id="pri1" value="1">
                                 <label for="pri1">高</label>
 
-                                <input type="radio" name="priority" id="pri2" value="MID" checked>
+                                <input type="radio" name="priority" id="pri2" value="2" checked>
                                 <label for="pri2">中</label>
 
-                                <input type="radio" name="priority" id="pri3" value="LOW">
+                                <input type="radio" name="priority" id="pri3" value="3">
                                 <label for="pri3">低</label>
                             </div>
                         </div>
@@ -44,7 +44,8 @@
 
                             <label for="limit">期日</label>
                             <input type="date" name="limit" id="limit"
-                             value="@php echo date("Y-m-d")@endphp" required>
+                             {{-- value=" @php echo date("Y-m-d")@endphp" required --}}
+                             >
 
 
                         <!-- タスク追加ボタン -->
@@ -61,7 +62,6 @@
             </div>
             <!--現在のタスク -->
             @if ($task_exit)
-
                 <div class="panel panel-default">
                    <div class="panel-heading">
                        現在のタスク
@@ -79,23 +79,25 @@
                     <!-- テーブル本体 -->
                    <tbody>
 
-                      @foreach ($tasks as $key => $value)
-                      @include('add_priority_to_table')
-                        @foreach ($value as $task)
-
+                      @foreach ($tasks as $task)
                         <tr>
                             <!--期日表示-->
-                            <td>
+                            <td @if($task->priority == "1") class = "redborder"
+                                @elseif($task->priority == "2") class = "blueborder"
+                                @elseif($task->priority == "3") class = "greenborder"
+                                @endif
+                                  >
                                 <div>{{ $task->limit }}
 
-                              @if($task->over_limit)<span style="color:red">Too Later!</span>@endif
+                              @if($task->over_limit)<span style="color:red">Too Late!</span>@endif
 
                                 </div>
                             </td>
 
                             <!--タスクの表示-->
                             <td class="table-text">
-                                <div id = "change_color">{{ $task->name }}</div>
+                               <span @if($task->over_limit)style="color:red"@endif> {{ $task->name }}</span>
+
                             </td>
 
                             <!-- 編集ボタン -->
@@ -110,17 +112,16 @@
 
                             <!-- 削除ボタン -->
                             <td>
-                                <form action="{{ url('tasks/'.$task->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">
-        　                              <i class="fa fa-btn fa-trash"></i>　削除
-                                    </button>
-                                </form>
+                            <form action="{{ url('task/' . $task->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa fa-btn fa-trash"></i> 削除
+                                </button>
+                                                        
                             </td>
                         </tr>
-
-                        @endforeach
                       @endforeach
                     </tbody>
                     </table>
@@ -129,38 +130,19 @@
             @endif
         </div>
     </div>
-
+  
+        }
 <style>
-    .colorborder{
-        border-left: 10px;
-        border-color: red;
+  .redborder{
+    border-left: solid 0.5em #f00;
+  }  
+  .greenborder{
+    border-left: solid 0.5em #0a0;
+  }  
+  .blueborder{
+    border-left: solid 0.5em #00f;
+  }
 
-    }
-
- </style>
-
-<script>
-    $(function()){
-
-
-        if($tasks->priority == "HI") {
-            $(”#change_color”).addClass(”colorborder”);
-
-
-        }
-        elseif($tasks->priority == "MID") {
-            $(”#change_color”);
-
-        }elsef($tasks->priority == "LOW") {
-            $(”#change_color”);
-
-        }
-
-
-
-    });
-
-</script>
-
+</style>
 
 @endsection
